@@ -1,0 +1,35 @@
+---
+title: "API Exercises"
+author: "Geoffrey Arnold"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(httr) # http rest requests
+library(jsonlite) # fromJSON
+library(utils) # URLencode functions
+library(sf) # sf
+```
+
+## WPRDC API Call
+
+```{r blotter}
+# Generate URL
+url <- URLencode('https://data.wprdc.org/api/action/datastore_search_sql?sql=SELECT * FROM "1797ead8-8262-41cc-9099-cbc8a161924b"', repeated = TRUE)
+# Send request
+get <- GET(url)
+# Retrieve results
+results <- fromJSON(content(get, "text"))$result$records
+# View Records
+View(results)
+```
+
+## Esri Call
+
+```{r esri}
+# Load as geojson
+polls <- st_read("https://services1.arcgis.com/vdNDkVykv9vEWFX4/ArcGIS/rest/services/Polling_Places_2020/FeatureServer/0/query?where=MuniName+%3D+%27PITTSBURGH%27&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&relationParam=&returnGeodetic=false&outFields=*&returnGeometry=true&featureEncoding=esriDefault&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&defaultSR=&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&cacheHint=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pgeojson&token=")
+# Plot polling locations
+plot(polls)
+```

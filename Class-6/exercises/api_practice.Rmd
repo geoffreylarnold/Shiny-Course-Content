@@ -1,0 +1,25 @@
+---
+title: "API Exercises"
+author: "Geoffrey Arnold"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(httr) # http rest requests
+library(jsonlite) # fromJSON
+library(utils) # URLencode functions
+library(rgdal) # readOGR
+```
+
+## API Call
+
+```{r blotter}
+
+```
+
+## Esri Call
+
+```{r esri}
+
+```
