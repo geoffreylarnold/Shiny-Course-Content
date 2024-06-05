@@ -1,0 +1,85 @@
+---
+title: "Leaflet Exercises"
+author: "Geoffrey Arnold"
+date: "12/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+require(rgdal)
+require(leaflet)
+require(leaflet.extras)
+
+require(dplyr)
+require(readxl)
+require(stringr)
+```
+
+# In class Exercises
+
+## Blank map with provider selector
+
+```{r, controls}
+leaflet() %>%
+  # Basemaps
+  addTiles(group = "OSM (default)") %>%
+  addProviderTiles("Stamen.Toner", group = "Toner") %>%
+  addProviderTiles("Stamen.TonerLite", group = "Toner Lite") %>%
+  # Layers control
+  addLayersControl(
+    baseGroups = c("OSM (default)", "Toner", "Toner Lite"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
+```
+
+## Shape with Colors
+
+```{r, polygon}
+op_data <- read_excel("Geographies_of_Opportunity_Ranking_Well_Being_by_Congressional_District_(114th_Congress).xlsx") %>%
+  mutate(Number = str_pad(Number, 4, pad = "0"))
+
+cds.load <- st_read("./cb_2015_us_cd114_500k/cb_2015_us_cd114_500k.shp")
+
+# Merge with Left Join
+cds <- cds.load %>%
+  left_join(op_data, by = c("GEOID" = "Number"))
+
+# Solution
+pal <- colorNumeric(
+  palette = "Purples",
+  domain = cds$`Life Expectancy at Birth (years)`)
+
+leaflet(data = cds) %>%
+  addProviderTiles("Stamen.Toner") %>%
+  addPolygons(color = ~pal(`Life Expectancy at Birth (years)`),
+              fillOpacity = .9,
+              popup = ~paste0("<b>", `Congressional District`, ":</b> ", round(`Life Expectancy at Birth (years)`, 2), " years")) %>%
+  addLegend(position = "bottomright", 
+            pal = pal, 
+            values = ~`Life Expectancy at Birth (years)`,
+            na.label = "Not available",
+            title = "Avg Life Expectancy<br>at Birth (years)")
+```
+
+## Point Clusters
+
+```{r}
+dat311 <- read.csv("311data.csv")
+
+pal311 <- colorFactor(c("#d73027", "#1a9850"), c("Closed", "Open"))
+
+leaflet(data = dat311) %>%
+  addProviderTiles(providers$CartoDB) %>%
+  addCircleMarkers(lng = ~X, lat = ~Y, radius = 1.5, color = ~pal311(STATUS), clusterOptions = markerClusterOptions()) %>%
+  addLegend(position = "topright" , pal = pal311, values = dat311$STATUS, title = "Status")
+```
+
+# Heatmap
+
+```{r, heat}
+potholes <- read.csv("311_potholes.csv")
+
+leaflet(data = potholes) %>%
+  addProviderTiles("CartoDB.DarkMatter") %>%
+  addHeatmap(lng = ~X, lat = ~Y, radius = 8)
+```

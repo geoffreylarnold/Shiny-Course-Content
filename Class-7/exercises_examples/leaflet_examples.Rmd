@@ -1,0 +1,108 @@
+---
+title: "Leaflet Examples"
+author: "Geoffrey Arnold"
+date: "12/23/2020"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+require(sf)
+require(leaflet)
+require(leaflet.extras)
+
+require(dplyr)
+require(readxl)
+require(stringr)
+```
+
+# Getting Spatial Data
+
+```{r, loading}
+cds.load <- st_read("./cb_2015_us_cd114_500k/cb_2015_us_cd114_500k.shp")
+plot(cds.load)
+
+polls <- st_read("Allegheny_County_Polling_Place_Locations_November_2016.geojson")
+plot(polls)
+```
+
+# Merging Table Data to your shapefile
+
+```{r, merging}
+op_data <- read_excel("Geographies_of_Opportunity_Ranking_Well_Being_by_Congressional_District_(114th_Congress).xlsx") %>%
+  mutate(Number = str_pad(Number, 4, pad = "0"))
+
+# Merge with Left Join
+cds <- cds.load %>%
+  left_join(op_data, by = c("GEOID" = "Number"))
+```
+
+# Blank map with basemap
+
+```{r}
+leaflet() %>%
+  addProviderTiles("Stamen.Toner")
+```
+
+# Blank map with no warp
+
+```{r}
+leaflet() %>%
+  addProviderTiles(providers$Esri.WorldImagery, options = providerTileOptions(noWrap = TRUE))
+```
+
+# Shape
+
+```{r, polygon}
+
+```
+
+# Lines
+
+```{r, lines}
+rivers <- st_read("./ne_10m_rivers_lake_centerlines")
+
+leaflet(data = rivers) %>%
+  addProviderTiles("Esri.WorldTerrain", options = providerTileOptions(noWrap = TRUE)) %>%
+  addPolylines(color = "#63CBD3")
+```
+
+# Line with Popups
+
+```{r, popups}
+rivers <- st_read("./ne_10m_rivers_lake_centerlines")
+plot(rivers)
+
+leaflet(data = rivers) %>%
+  addProviderTiles("Esri.WorldTerrain", options = providerTileOptions(noWrap = TRUE)) %>%
+  addPolylines(color = "#63CBD3", popup = ~name_en)
+```
+
+# Points
+
+```{r}
+
+```
+
+## Points from GEOJSON
+
+```{r, geojson}
+leaflet(data = polls) %>%
+  addProviderTiles("OpenStreetMap.Mapnik") %>%
+  addMarkers(popup = ~paste0(LocName, ": ", NewAddress, " ", City, " PA ", Zip))
+```
+
+## Points Awesome Markers
+
+```{r, awesome_markers}
+potOver <- read.csv("potholesOvergrowth.csv")
+
+icons <- awesomeIconList(
+  Potholes = makeAwesomeIcon(icon = "road", library = "fa", markerColor = "gray"),
+  Overgrowth = makeAwesomeIcon(icon = "leaf", library = "fa", markerColor = "green")
+)
+
+leaflet(data = potOver) %>%
+  addProviderTiles("OpenStreetMap.HOT") %>%
+  addAwesomeMarkers(lng = ~X, lat = ~Y, icon = ~icons[REQUEST_TYPE], popup = ~REQUEST_TYPE)
+```

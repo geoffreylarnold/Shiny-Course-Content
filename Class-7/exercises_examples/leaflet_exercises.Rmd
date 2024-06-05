@@ -1,0 +1,52 @@
+---
+title: "Leaflet Exercises"
+author: "Geoffrey Arnold"
+date: "8/18/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+require(rgdal)
+require(leaflet)
+require(leaflet.extras)
+
+require(dplyr)
+require(readxl)
+require(stringr)
+```
+
+# In class Exercises
+
+## Blank map with provider selector
+
+```{r, controls}
+
+```
+
+## Shape with Colors
+
+```{r, polygon}
+op_data <- read_excel("Geographies_of_Opportunity_Ranking_Well_Being_by_Congressional_District_(114th_Congress).xlsx") %>%
+  mutate(Number = str_pad(Number, 4, pad = "0"))
+
+cds.load <- readOGR("./cb_2015_us_cd114_500k/cb_2015_us_cd114_500k.shp", layer = "cb_2015_us_cd114_500k", GDAL1_integer64_policy = TRUE)
+
+# Merge with Left Join
+cds <- cds.load %>%
+  left_join(op_data, by = c("GEOID" = "Number"))
+
+```
+
+## Point Clusters
+
+```{r, clusters}
+dat311 <- read.csv("311data.csv")
+
+```
+
+## Heatmap
+
+```{r, heatmap}
+potholes <- read.csv("311_potholes.csv")
+
+```
