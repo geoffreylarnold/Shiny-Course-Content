@@ -1,11 +1,11 @@
-# R Shiny for Operations Management
+# R Shiny Training
 * Day/Time: Mon 10am-1:00 pm
 * Location: Virtual
 ### Instructor information
 * Name: Geoffrey Arnold
 * Email: geoffrey.lloyd.arnold@gmail.com  
 ## Course Description
-This course will teach students to generate interactive websites including GIS maps and other data visualizations and reports using the R programming language. The course will focus on RStudio’s Shiny web application framework for creating interactive web applications, and the Leaflet library package for mobile-friendly interactive maps. This course builds directly from its prerequisite course, Programming R for Analytics course, and offers students a chance to build skills that will be marketable in both the public and the private sectors. Students will learn to load data from a variety of sources and formats for use in interactive web interfaces that can provide real-time information, including Rest APIs.
+This course will teach students to generate interactive websites including data visualizations and reports using the R programming language. The course will focus on RStudio’s Shiny web application framework for creating interactive web applications, and the Leaflet library package for mobile-friendly interactive maps. This course builds directly from its prerequisite course, Programming R for Analytics course, and offers students a chance to build skills that will be marketable in both the public and the private sectors. Students will learn to load data from a variety of sources and formats for use in interactive web interfaces that can provide real-time information, including Rest APIs.
 ## Course Relevance
 Business Intelligence is a growing and dynamic sector. Shiny apps allow students to build comprehensive and powerful Dashboards and other kinds of web applications that can be used at firms with a variety of infrastructure.
 Students will walk away from this course with at least 3 functioning examples of their achievements that they can show and demonstrate to both current and future employers.
@@ -33,8 +33,8 @@ There are two optional assignments that will be provided to students that will t
 # Course Schedule
 * Class 1 - 7/8 - Course Overview & Introduction to Shiny
 * Class 2 - 7/15 - Reactive Programming & User Interfaces
-* Class 3 - 7/22 - Reactive Programming Pt. 2 & Dashboards
-* Class 4 – 7/29 - Interactive Visualizations & Advanced Reactivity
-* Class 5 - 8/5 – Modules & Bookmarking 
-* Class 6 - 8/12 - Connecting to Databases & API's 
+* Class 3 - 7/29 - Reactive Programming Pt. 2 & Dashboards
+* Class 4 – 8/5 - Interactive Visualizations & Advanced Reactivity
+* Class 5 - 8/12 – Modules & Bookmarking 
+* Class 6 - 8/19 - Connecting to Databases & API's 
 * Class 7 - Leaflet & LeafletProxy (Optional content no lecture)
