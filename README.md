@@ -1,4 +1,4 @@
-# R Shiny for Operations Management
+# R Shiny Training
 * Day/Time: Mon 10am-1:00 pm
 * Location: Virtual
 ### Instructor information
