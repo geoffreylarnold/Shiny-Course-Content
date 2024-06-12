@@ -33,8 +33,8 @@ There are two optional assignments that will be provided to students that will t
 # Course Schedule
 * Class 1 - 7/8 - Course Overview & Introduction to Shiny
 * Class 2 - 7/15 - Reactive Programming & User Interfaces
-* Class 3 - 7/22 - Reactive Programming Pt. 2 & Dashboards
-* Class 4 – 7/29 - Interactive Visualizations & Advanced Reactivity
-* Class 5 - 8/5 – Modules & Bookmarking 
-* Class 6 - 8/12 - Connecting to Databases & API's 
+* Class 3 - 7/29 - Reactive Programming Pt. 2 & Dashboards
+* Class 4 – 8/5 - Interactive Visualizations & Advanced Reactivity
+* Class 5 - 8/12 – Modules & Bookmarking 
+* Class 6 - 8/19 - Connecting to Databases & API's 
 * Class 7 - Leaflet & LeafletProxy (Optional content no lecture)
