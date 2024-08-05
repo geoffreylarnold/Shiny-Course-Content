@@ -23,8 +23,7 @@ require(tidyr)
 pdf(NULL)
 
 diamonds <- diamonds
-mtcars <- mtcars %>%
-  rownames_to_column()
+mtcars <- mtcars
 
 iris <- iris
 starwars <- starwars

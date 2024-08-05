@@ -140,14 +140,14 @@ server <- function(input, output, session) {
   output$scatterplot <- renderPlotly({
     ggplotly(
       ggplot(data = movies_sample(), aes_string(x = input$x, y = input$y,
-                                                color = input$z)) +
+                                                color = input$z, text = 'title')) +
         geom_point(alpha = input$alpha, size = input$size) +
         labs(x = toTitleCase(str_replace_all(input$x, "_", " ")),
              y = toTitleCase(str_replace_all(input$y, "_", " ")),
              color = toTitleCase(str_replace_all(input$z, "_", " ")),
              title = pretty_plot_title()
         ),
-      tooltip = c("x", "y"))
+      tooltip = c("text", "color", "x", "y"))
   })
   
   # Print number of movies plotted ----------------------------------

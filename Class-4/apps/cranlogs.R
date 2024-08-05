@@ -29,7 +29,7 @@ server <- function(input, output, session) {
   daily_downloads <- reactive({
     cranlogs::cran_downloads(
       packages = packages(),
-      from = "2016-01-01", to = "2016-12-31"
+      from = "2023-01-01", to = "2023-12-31"
     )
   })
   
