@@ -15,7 +15,7 @@ ui <- function(request) {
 
 # Define server accumulator app with bookmarking --------------------
 server <- function(input, output, session) {
-  
+  # Observe changes to input list and perform bookmark
   observe({
     reactiveValuesToList(input)
     session$doBookmark()
