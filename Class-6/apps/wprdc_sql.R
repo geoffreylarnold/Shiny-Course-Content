@@ -36,19 +36,21 @@ server <- function(input, output) {
         q <- paste(input$query, "LIMIT 500")
         formatQuery <- URLencode(q, repeated = TRUE)
         # Build URL for GET request
-        url <- paste0("https://data.wprdc.org/api/action/datastore_search_sql?sql=", formatQuery)
+        url <- paste0("http://data.wprdc.org/api/action/datastore_search_sql?sql=", formatQuery)
+        print(url)
         # Run Get Request
         g <- GET(url)
         # Check if there's an error
         if (g$status_code != 200) {
             # Send error to table
-            results <- as_tibble(content(g)$error$info)
+            final <- as_tibble(content(g)$error$info)
         } else {
             # Retrieve and display the results if successful
             results <- fromJSON(content(g, "text"))$result$records
+            final <- select(results, -ends_with("_full_text"))
         }
         
-        return(results)
+        return(final)
     })
     # Display results in Table
     output$results <- DT::renderDataTable(

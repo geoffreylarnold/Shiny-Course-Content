@@ -14,9 +14,10 @@ library(sf) # sf
 
 ## WPRDC API Call
 
-```{r blotter}
+```{r counts}
 # Generate URL
-url <- URLencode('https://data.wprdc.org/api/action/datastore_search_sql?sql=SELECT * FROM "1797ead8-8262-41cc-9099-cbc8a161924b"', repeated = TRUE)
+url <- URLencode('http://data.wprdc.org/api/action/datastore_search_sql?sql=SELECT "municipal" , COUNT("id" ) FROM "112a3821-334d-4f3f-ab40-4de1220b1a0a" WHERE "bus_cl_date" IS NULL 
+                 GROUP BY "municipal" LIMIT 500', repeated = TRUE)
 # Send request
 get <- GET(url)
 # Retrieve results
