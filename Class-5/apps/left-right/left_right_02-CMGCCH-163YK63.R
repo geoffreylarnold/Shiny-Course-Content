@@ -49,7 +49,6 @@ dataset_summarizer <- function(input, output, session, dataset, count) {
     mean_x = mean_x,
     mean_y = mean_y
   ))
-  
 }
 
 # Module 3: Dataset plotter ---------------------------------------------------
