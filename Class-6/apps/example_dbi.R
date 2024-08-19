@@ -33,7 +33,7 @@ ui <- fluidPage(
    sidebarLayout(
       sidebarPanel(
         # Date selection
-         sdateRangeInput("dates",
+         dateRangeInput("dates",
                          "Select Dates",
                          start = Sys.Date()-30,
                          end = Sys.Date()),
@@ -56,11 +56,10 @@ server <- function(input, output, session) {
    dataLoad <- reactivePoll(60000, session, 
                             checkFunc = function(){
                               print("Entered Check")
-                              Sys.time()
                               print(Sys.time())
                               # gets max date from database table to determine if data has been updated
                               conn <- poolCheckout(pool)
-                              max_date <- dbGetQuery(con, "SELECT UNIX_TIMESTAMP(DATE_COLUMN) FROM SOME_TABLE;")
+                              max_date <- dbGetQuery(conn, paste0("SELECT MAX(UNIX_TIMESTAMP(DATE_COLUMN)) n FROM SOME_TABLE WHERE TYPE = ", input$select, ";"))$n
                               data <- dbGetQuery(conn, sql)
                               poolReturn(conn)
                               return(max_date)
@@ -75,9 +74,8 @@ server <- function(input, output, session) {
                               return(data)
                             }
    )
-   dataFilter <- 
    output$examplePlot <- renderPlot({
-     data <- dataFilter()
+     data <- dataLoad()
      
      req(input$dates)
      table<- filter(DATE >= input$dates[1] & DATE <= input$dates[2])
@@ -85,6 +83,7 @@ server <- function(input, output, session) {
      ggplot(table, aes(x = STATUS, fill = STATUS)) +
        geom_bar()
    })
+   # CLose pool on application close
    onStop(
      poolClose(pool)
    )
